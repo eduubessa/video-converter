@@ -16,6 +16,7 @@ export default async function convert({ input, output, socket, job_id }: Convert
                 throw new Error('Vídeo muito curto para conversão.');
             }
 
+            // TODO: Get original resolution per file
            //const original_res = await getResolution(input);
 
             const resolutions = [
@@ -29,6 +30,8 @@ export default async function convert({ input, output, socket, job_id }: Convert
                 { name: '240p', width: 426, height: 240, bitrate: '500k' },
                 { name: '144p', width: 256, height: 144, bitrate: '300k' },
             ];
+
+            // TODO: Filter resolutions from original resolution file
 
             /*
             const resolutions_filtered = resolutions.filter(res => {
