@@ -1,0 +1,7 @@
+package-lock.json
+.git/
+.idea/
+.vscode/
+node_modules/
+outputs/
+temp/
