@@ -16,8 +16,7 @@ export default async function convert({ input, output, socket, job_id }: Convert
                 throw new Error('Vídeo muito curto para conversão.');
             }
 
-            // TODO: Get original resolution per file
-           //const original_res = await getResolution(input);
+           const original_res = await getResolution(input);
 
             const resolutions = [
                 { name: '8k', width: 7680, height: 4320, bitrate: '14000k' },
@@ -31,19 +30,13 @@ export default async function convert({ input, output, socket, job_id }: Convert
                 { name: '144p', width: 256, height: 144, bitrate: '300k' },
             ];
 
-            // TODO: Filter resolutions from original resolution file
-
-            /*
             const resolutions_filtered = resolutions.filter(res => {
                 return res.width <= original_res.width && res.height <= original_res.height;
             });
-            */
 
             const variant_streams: string[] = [];
 
-            for (const res of resolutions) {
-                console.log(res);
-
+            for (const res of resolutions_filtered) {
                 const output_per_res = path.join(output, res.name);
                 const output_file = path.join(output_per_res, `master.m3u8`);
 
@@ -134,7 +127,6 @@ export default async function convert({ input, output, socket, job_id }: Convert
             });
             reject(err);
         } finally {
-            // Apagar ficheiro original sempre, evita deixar lixo
             if (fs.existsSync(input)) {
                 try {
                     fs.unlinkSync(input);
